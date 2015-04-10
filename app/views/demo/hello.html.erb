@@ -1,0 +1,17 @@
+<h1>Demo#Hello</h1>
+<p>Find me in app/views/demo/hello.html.erb</p>
+
+<% target = "Hello World" %>
+<%= "This is our target #{target}" %>
+
+<% 3.times do %>
+	<%= "xxx" %>
+<% end %>
+
+<br />
+
+<%= link_to('Home Page', {:action => 'index'}) %><br /><br />
+
+<%= "ID: #{@id}" %><br />
+<%= "Page: #{@page}" %><br />
+<%= "Next Page: #{@page + 1}" %><br />
