@@ -5,6 +5,6 @@
 	<%= n %><br />
 <% end %>
 
-<%= link_to('Hello Page', {:action => 'hello', :id => 1, :page => 5}) %>
-<%= link_to('Hello Home', {:action => 'hello_other'}) %>
-<%= link_to('Lynda', {:action => 'lynda'}) %>
+<%= link_to('Sections', {:controller => 'sections', :action => 'index'}) %>
+<%= link_to('Pages', 	{:controller => 'pages', :action => 'index'}) %>
+<%= link_to('Subjects', {:controller => 'subjects', :action => 'index'}) %>

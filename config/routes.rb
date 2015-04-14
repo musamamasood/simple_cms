@@ -1,24 +1,4 @@
 Rails.application.routes.draw do
-  get 'section/index'
-
-  get 'section/show'
-
-  get 'section/new'
-
-  get 'section/edit'
-
-  get 'section/delete'
-
-  get 'pages/index'
-
-  get 'pages/show'
-
-  get 'pages/new'
-
-  get 'pages/edit'
-
-  get 'pages/delete'
-
   #get 'subjects/index'
 
   #get 'subjects/show'

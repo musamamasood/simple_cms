@@ -1,8 +1,4 @@
-<% if !flash[:notice].blank? %>
-  <div class="notice">
-    <%= flash[:notice] %>
-  </div>  
-<% end %>
+<% @page_title = "Subject" %>
 
 <%= link_to("<< Back to List", {:action => 'index'}, :class => 'back-link') %>
 
@@ -20,7 +16,7 @@
     </tr>
     <tr>
       <th>Visible?</th>
-      <td><%= @subject.visible ? 'true' : 'false' %></td>
+      <td><%= status_tag(@subject.visible) %></td>
     </tr>
     <tr>
       <th>Created</th>
