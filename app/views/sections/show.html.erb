@@ -7,6 +7,10 @@
 
 	<table summary="Subject detail view">
 		<tr>
+			<th>Page</th>
+			<td><%= @section.page.name if @section.page %></td>	
+		</tr>
+		<tr>
 			<th>Name</th>
 			<td><%= @section.name %></td>	
 		</tr>

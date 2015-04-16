@@ -3,15 +3,15 @@
 <div class="pages index">
   <h2>Pages</h2>
 
-  <%= link_to("Add New Page", {:action => 'new'}, :class => 'action new') %>
+  <%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + "Add New Page", {:action => 'new'}, :class => 'action new') %>
 
   <div><%= pluralize(@pages.size, 'page') %> found</div>
 
   <table class="listing" summary="Subject list">
     <tr class="header">
-      <th>&nbsp;</th>
-      <th>Subject ID</th>
+      <th>Subject</th>
       <th>Name</th>
+      <th>Position</th>
       <th>Permalink</th>
       <th>Visible</th>
       <th>Section</th>
@@ -19,9 +19,9 @@
     </tr>
     <% @pages.each do |page| %>
     <tr class="<%= cycle('odd', 'even') %>">
-      <td><%= page.position %></td>
-      <td class="center"><%= page.subject_id %></td>
+      <td class="center"><%= page.subject.name if page.subject %></td>
       <td><%= page.name %></td>
+      <td><%= page.position %></td>
       <td class="center"><%= page.permalink %></td>
       <td class="center"><%= status_tag(page.visible) %></td>
       <td class="center"><%= page.sections.size %></td>

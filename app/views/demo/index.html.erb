@@ -8,3 +8,13 @@
 <%= link_to('Sections', {:controller => 'sections', :action => 'index'}) %>
 <%= link_to('Pages', 	{:controller => 'pages', :action => 'index'}) %>
 <%= link_to('Subjects', {:controller => 'subjects', :action => 'index'}) %>
+
+<br />
+
+<% text = "'); alert('Gottcha" %>
+
+<%= link_to('Roar', '#', :onclick => "alert('You said #{j(text)}');") %>
+
+<%= javascript_tag("alert('You said #{j(text)}');") %>
+
+<%# javascript_tag("roar('rails');") %>

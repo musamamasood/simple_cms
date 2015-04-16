@@ -1,5 +1,7 @@
 class DemoController < ApplicationController
-  layout false
+  
+  layout "application"
+
   def index
   	@array = [1,2,3,4,5]
   	render('index')

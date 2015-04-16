@@ -11,7 +11,9 @@ class SectionsController < ApplicationController
   end
 
   def new
-    @section = Section.new
+    @section       = Section.new
+    @section_count = Section.count + 1
+    @pages         = Page.order('position ASC')
   end
 
   def create
@@ -23,14 +25,18 @@ class SectionsController < ApplicationController
         flash[:notice] = "Section Created successfully .."
         redirect_to(:action => 'show', :id => @section.id)
       else 
-      # otherwise return to new page
+        # otherwise return to new page
+        @pages         = Page.order('position ASC')
+        @section_count = Section.count + 1
         render('new')
       end
 
   end
 
   def edit
-    @section = Section.find( params[:id] )
+    @section       = Section.find( params[:id] )
+    @pages         = Page.order('position ASC')
+    @section_count = Section.count
   end
 
   def update
@@ -42,7 +48,9 @@ class SectionsController < ApplicationController
         flash[:notice] = "Section Updated successfully .."
         redirect_to(:action => 'show', :id => @section.id)
       else 
-      # otherwise return to new page
+        # otherwise return to new page
+        @pages         = Page.order('position ASC')
+        @section_count = Section.count
         render('edit')
       end
   end
@@ -62,7 +70,7 @@ class SectionsController < ApplicationController
     # - raises an error if :subject is not present
     # - allows listed attributes to be mass-assigned.
     def section_params
-      params.require(:section).permit(:name, :position, :visible, :content_type, :content)
+      params.require(:section).permit(:page_id, :name, :position, :visible, :content_type, :content)
     end
 
 end
