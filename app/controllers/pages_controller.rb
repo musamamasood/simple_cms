@@ -2,8 +2,12 @@ class PagesController < ApplicationController
   
   layout "admin"
 
+  before_action :confirm_logged_in
+  before_action :find_subject
+
   def index
-    @pages = Page.all.sorted
+    # @pages = Page.where(:subject_id => @subject_id)
+    @pages = @subject.pages.sorted
   end
 
   def show
@@ -11,7 +15,7 @@ class PagesController < ApplicationController
   end
 
   def new
-    @page = Page.new(:name => "Page Name")
+    @page = Page.new({:subject_id => @subject.id, :name => "Page Name"})
     @subjects = Subject.all.sorted
     @page_count = Page.count + 1
   end
@@ -23,7 +27,7 @@ class PagesController < ApplicationController
     if @page.save
       #if successful, redirected to index page
       flash[:notice] = "Page cretaed successfully."
-      redirect_to(:action => 'index')
+      redirect_to(:action => 'index', :subject_id => @subject.id)
     else
       # else failed then render new page. 
       @page_count = Page.count + 1
@@ -35,7 +39,7 @@ class PagesController < ApplicationController
   def edit
     @page       = Page.find(params[:id])
     @subjects   = Subject.order('position ASC')
-        @page_count = Page.count
+    @page_count = Page.count
   end
   
   def update
@@ -45,7 +49,7 @@ class PagesController < ApplicationController
     if @page.update_attributes( page_params )
       #if successful, redirected to index page
       flash[:notice] = "Page updated successfully."
-      redirect_to(:action => 'show', :id => @page.id)
+      redirect_to(:action => 'show', :id => @page.id, :subject_id => @subject.id)
     else
       # else failed then render new page. 
       @page_count = Page.count
@@ -62,7 +66,7 @@ class PagesController < ApplicationController
   def destroy
     page = Page.find(params[:id]).destroy
     flash[:notice] = "Page '#{page.name}' destroyed successfully!"
-    redirect_to(:action => 'index')
+    redirect_to(:action => 'index', :subject_id => @subject.id)
   end
 
   private
@@ -71,6 +75,11 @@ class PagesController < ApplicationController
       # - raises an error if :subject is not present
       # - allows listed attributes to be mass-assigned.
       params.require(:page).permit(:subject_id, :name, :permalink, :position, :visible)
-      
+    end
+
+    def find_subject
+      if params[:subject_id]
+        @subject = Subject.find( params[:subject_id] )
+      end
     end
 end

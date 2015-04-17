@@ -2,6 +2,8 @@ class SubjectsController < ApplicationController
 
   layout "admin"
 
+  before_action :confirm_logged_in
+
   def index
     @subjects = Subject.all.sorted
   end
@@ -74,7 +76,6 @@ class SubjectsController < ApplicationController
       # - raises an error if :subject is not present
       # - allows listed attributes to be mass-assigned.
       params.require(:subject).permit(:name, :position, :visible)
-      
     end
 
 end

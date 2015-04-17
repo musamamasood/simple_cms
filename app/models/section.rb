@@ -4,6 +4,10 @@ class Section < ActiveRecord::Base
 	has_many :section_edits
 	has_many :editors, :through => :section_edits, :class_name => "AdminUser"
 
+	acts_as_list :scope => :page
+
+	after_save :touch_page
+
 	validates_presence_of :name
 
 	CONTENT_TYPES = ['text', 'html']
@@ -20,5 +24,12 @@ class Section < ActiveRecord::Base
 	scope :search,    lambda { |query| 
 		where("name LIKE ?", "%#{query}%")  
 	}
+
+	private
+		def touch_page
+			# touch is similar to:
+			# subject.update_attribute(:update_at, Time.now)
+			page.touch
+		end
 
 end

@@ -1,5 +1,7 @@
 class AdminUser < ActiveRecord::Base
 
+	has_secure_password
+
 	has_and_belongs_to_many :pages
 	has_many :section_edits
 	has_many :sections, :through => :section_edits
@@ -23,11 +25,22 @@ class AdminUser < ActiveRecord::Base
 	validates :first_name, :presence => true, :length => { :maximum => 25 }
 	validates :last_name,  :presence => true, :length => { :maximum => 50 }
 	validates :username,   :presence => true, :length => { :within => 3..25}, :uniqueness => true
-	validates :email, 	   :presence => true, :length => { :maximum => 100 }, :format => EMAIL_REGEX, :confirmation => true
+	validates :email, 	   :presence => true, :length => { :maximum => 100 }, :format => EMAIL_REGEX, 
+						   :confirmation => true
 
 	validate :username_is_allowed
 	## Custom validation on create for new user registration
 	# validate :no_new_users_on_saturday, :on => :create
+
+	scope :sorted, lambda { order("admin_users.last_name ASC, admin_users.first_name ASC") }
+
+	def name
+		"#{first_name} #{last_name}"
+		# Or: first_name + ' ' + last_name
+		# Or: [first_name, last_name].join(' ')
+	end
+
+	private
 
 	def username_is_allowed
 		if FORBIDDEN_USERNAMES.include?(username)

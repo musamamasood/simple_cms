@@ -1,17 +1,19 @@
 <% @page_title = "Pages" %>
 
+<%= link_to('<< Back to Subject', {:controller => 'subjects', :action => 'index'}, :class => 'back-link') %>
+
 <div class="pages index">
   <h2>Pages</h2>
 
-  <%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + "Add New Page", {:action => 'new'}, :class => 'action new') %>
+  <%= link_to(image_tag('plus_sign.png', :size => '11x11', :alt => '+') + "Add New Page", new_subject_page_path(@subject.id), :class => 'action new') %>
 
   <div><%= pluralize(@pages.size, 'page') %> found</div>
 
   <table class="listing" summary="Subject list">
     <tr class="header">
+      <th>&nbsp;</th>
       <th>Subject</th>
       <th>Name</th>
-      <th>Position</th>
       <th>Permalink</th>
       <th>Visible</th>
       <th>Section</th>
@@ -19,16 +21,17 @@
     </tr>
     <% @pages.each do |page| %>
     <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= page.position %></td>
       <td class="center"><%= page.subject.name if page.subject %></td>
       <td><%= page.name %></td>
-      <td><%= page.position %></td>
       <td class="center"><%= page.permalink %></td>
       <td class="center"><%= status_tag(page.visible) %></td>
       <td class="center"><%= page.sections.size %></td>
       <td class="actions">
-        <%= link_to("Show", {:action => 'show', :id => page.id }, :class => 'action show') %>
-        <%= link_to("Edit", {:action => 'edit', :id => page.id }, :class => 'action edit') %>
-        <%= link_to("Delete", {:action => 'delete', :id => page.id }, :class => 'action delete') %>
+        <%= link_to("View Section", subject_page_sections_path(@subject.id, page.id), :class => 'action view') %>
+        <%= link_to("Show", subject_page_path(@subject.id, page.id), :class => 'action show') %>
+        <%= link_to("Edit", edit_subject_page_path(@subject.id, page.id), :class => 'action edit') %>
+        <%= link_to("Delete", delete_subject_page_path(@subject.id, page.id), :class => 'action delete') %>
       </td>
     </tr>
     <% end %>

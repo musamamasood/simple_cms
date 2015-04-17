@@ -1,16 +1,47 @@
 Rails.application.routes.draw do
-  #get 'subjects/index'
 
-  #get 'subjects/show'
+  resources :admin_users, :except => [:show]
+  # resources :products, :only => [:index, :show]
 
-  #get 'subjects/new'
+=begin
+  resources :subjects do
+  
+    member do
+      get :delete # delete_subject_path(:id)
+    end
 
-  #get 'subjects/edit'
+    collection do
+      get :export # export_subjects_path
+    end
 
-  #get 'subjects/delete'
+  end
+=end
 
-  #get 'demo/index'
-  root 'demo#index'
+
+  resources :subjects do #Nested Resources
+    member do
+      get :delete
+    end
+
+    resources :pages do
+      member do
+        get :delete
+      end
+
+      resources :sections do
+        member do
+          get :delete
+        end
+      end
+    end
+  end
+
+  root 'public#index'
+
+  get 'show/:permalink', :to => 'public#show'
+
+  get 'admin', :to => 'access#index'  
+  
   match ':controller(/:action(/:id(.:format)))', :via => [:get, :post]
 
   # The priority is based upon order of creation: first created -> highest priority.

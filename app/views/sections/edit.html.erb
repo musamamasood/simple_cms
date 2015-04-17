@@ -1,11 +1,11 @@
 <% @page_title = "Edit Section" %>
 
-<%= link_to('<< Back to List', {:action => 'index'}, :class => 'back-link') %>
+<%= link_to('<< Back to List', {:action => 'index', :page_id => @page.id}, :class => 'back-link') %>
 
 <div class="sections edit">
 	<h2>Create Section</h2>
 
-	<%= form_for(:section, :url => {:action => 'update', :id => @section.id}) do |f| %>
+	<%= form_for(:section, :url => subject_page_section_path(@subject.id, @page.id, @section.id), :html => {:method => 'patch'}) do |f| %>
 	
 		<%= render(:partial => 'form', :locals => {:f => f}) %>
 
